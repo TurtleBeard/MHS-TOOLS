@@ -1,9 +1,5 @@
 # MHS-TALLY
 
-<p align="center">
-  <img src="assets/images/banner.png" alt="Michaelhouse Logo" width="400px">
-</p>
-
 ## Overview
 A real-time tally system designed for interhouse events. This system allows for a professional display of house scores that can be updated live from a separate controller window.
 

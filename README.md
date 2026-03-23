@@ -1,7 +1,7 @@
 # MHS-TALLY
 
 <p align="center">
-  <img src="banner.png" alt="Michaelhouse Logo" width="400px">
+  <img src="assets/images/banner.png" alt="Michaelhouse Logo" width="400px">
 </p>
 
 ## Overview

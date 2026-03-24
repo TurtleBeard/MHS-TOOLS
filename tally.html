@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>House Tallies | Michaelhouse</title>
@@ -9,6 +15,17 @@
         @font-face {
             font-family: 'OrpheusPro';
             src: url('assets/fonts/OrpheusPro-Bold.ttf') format('truetype');
+            font-weight: bold; font-style: normal; font-display: swap;
+        }
+		
+		@font-face {
+            font-family: 'FranklinDemi';
+            src: url('assets/fonts/franklin-gothic-atf-demi.ttf') format('truetype');
+            font-weight: bold; font-style: normal; font-display: swap;
+		}	
+			@font-face {
+            font-family: 'FranklinMedium';
+            src: url('assets/fonts/franklin-gothic-atf-medium.otf') format('opentype');
             font-weight: bold; font-style: normal; font-display: swap;
         }
         
@@ -34,13 +51,13 @@
             width: 100%;
             max-width: 1400px;
             height: 96vh;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 1);
             backdrop-filter: blur(2px);
             border-radius: 2rem;
             padding: 1rem 1.5rem;
             display: flex;
             flex-direction: column;
-            border: 8px double rgba(35, 52, 106, 1);
+            border: 8px double rgba(35, 52, 106, 0);
         }
 
         .banner { flex-shrink: 0; text-align: center; margin-bottom: 0.5rem; }
@@ -59,13 +76,13 @@
         }
 
         .tally-card {
-            border-radius: 1.5rem; 
+            border-radius: 0.5rem; 
             padding: 1rem; 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
             align-items: center;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 0px solid rgba(35,52,106,1);
             flex: 1 1 calc(20% - 1rem); 
         }
 
@@ -78,17 +95,19 @@
         .items-10 .tally-card { flex: 1 1 calc(20% - 1rem); }
 
         .tally-name {
-            font-size: clamp(1.2rem, 3.5vh, 3rem); 
-            background: rgba(255, 255, 255, 0.8	); 
-            color: #23346a; padding: 0.5rem 1rem; border-radius: 1rem; width: 100%; text-align: center;
-            line-height: 1.1;
+			font-family: 'FranklinDemi';
+            font-size: clamp(1.2rem, 4vh, 3rem); 
+            background: rgba(255, 255, 255, 0.95); 
+            color: #23346a; padding: 0.5rem 1rem; border-radius: 0.4rem; width: 100%; text-align: center;
+            line-height: 1;
         }
 
         .count-display {
-            font-size: clamp(4rem, 18vh, 16rem); 
+			font-family: 'FranklinMedium';			
+            font-size: clamp(2rem, 14vh, 12rem); 
             background: rgba(255, 255, 255, 0.95);
-            width: 95%; flex-grow: 1; margin-top: 0.8rem;
-            display: flex; justify-content: center; align-items: center; border-radius: 1.2rem;
+            width: 92%; flex-grow: 1; margin-top: 0.8rem;
+            display: flex; justify-content: center; align-items: center; border-radius: 0.4rem;
             transition: transform 0.1s ease;
         }
 
@@ -113,7 +132,7 @@
 
         .editable-label {
             background: rgba(0,0,0,0.3); border: none; color: white;
-            font-family: inherit; font-weight: bold; flex-grow: 1; padding: 6px; border-radius: 4px;
+            font-family: 'FranklinDemi'; font-weight: bold; flex-grow: 1; padding: 6px; border-radius: 4px;
         }
 
         .ctrl-count-input {
@@ -153,7 +172,7 @@
 <div class="main-container">
     <div class="banner">
         <img src="assets/images/banner.png" alt="Michaelhouse" onerror="this.style.display='none'">
-		<hr/>
+		<!-- <hr/> -->
     </div>
 
     
@@ -167,16 +186,16 @@
 
 <script>
     const defaultHouses = [
-        { id: 0, displayName: "Founders", color: "#da1a32", count: 0, visible: true },
-        { id: 1, displayName: "East", color: "#5c0845", count: 0, visible: true },
-        { id: 2, displayName: "West", color: "#002d5b", count: 0, visible: true },
-        { id: 3, displayName: "Farfield", color: "#ffdd54", count: 0, visible: true },
-        { id: 4, displayName: "Tatham", color: "#006b4e", count: 0, visible: true },
-        { id: 5, displayName: "Pascoe", color: "#4d230e", count: 0, visible: true },
-        { id: 6, displayName: "Baines", color: "#7dcef1", count: 0, visible: true },
-        { id: 7, displayName: "Mackenzie", color: "#f57f29", count: 0, visible: true },
-        { id: 8, displayName: "Ralfe", color: "#59ba58", count: 0, visible: true },
-        { id: 9, displayName: "McCormick", color: "#7d4a9d", count: 0, visible: true }
+        { id: 0, displayName: "FOUNDERS", color: "#da1a32", count: 0, visible: true },
+        { id: 1, displayName: "EAST", color: "#5c0845", count: 0, visible: true },
+        { id: 2, displayName: "WEST", color: "#002d5b", count: 0, visible: true },
+        { id: 3, displayName: "FARFIELD", color: "#ffdd54", count: 0, visible: true },
+        { id: 4, displayName: "TATHAM", color: "#006b4e", count: 0, visible: true },
+        { id: 5, displayName: "PASCOE", color: "#4d230e", count: 0, visible: true },
+        { id: 6, displayName: "BAINES", color: "#7dcef1", count: 0, visible: true },
+        { id: 7, displayName: "MACKENZIE", color: "#f57f29", count: 0, visible: true },
+        { id: 8, displayName: "RALFE", color: "#59ba58", count: 0, visible: true },
+        { id: 9, displayName: "McCORMICK", color: "#7d4a9d", count: 0, visible: true }
     ];
 
     let tallies = JSON.parse(localStorage.getItem('mh_tallies')) || defaultHouses;
